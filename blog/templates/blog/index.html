@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="{% static 'blog/style.css' %}"/>
+        <title>Blog</title>
+    </head>
+
+    <body>
+
+        <h1>
+            Blog
+        </h1>
+
+        <ul class="list">
+            <li><a href="">Blog Section</a></li>
+            <li><a href="archive/">Archive Section</a></li>
+            <li><a href="about/">About Section</a></li>
+            <li><a href="techtips-css/">Techtips - CSS</a></li>
+            <li><a href="techtips+css/">Techtips + CSS</a></li>
+            <li><a href="plan/">Plan</a></li>
+        </ul>
+
+        <p>The current time is {{now}}</p>
+
+        {% for blogPost in newBlogList %}
+        <div style="background-color: lightgreen">
+            <h2><a href="entry/{{blogPost.id}}">{{blogPost.title}}</a> ({{commentsList | length}} Comments)</h2>
+            <h3>{{blogPost.author}} </h3>
+            <p>{{blogPost.content|truncatewords:100}}</p>
+        </div>
+        {% endfor %}
+        <div style="background-color: aqua">
+            <h2>Finished Reading?</h2>
+            <p>Go and check our our <a href="archive/">Archive!</a></p>
+        </div>
+
+
+    </body>
+</html>

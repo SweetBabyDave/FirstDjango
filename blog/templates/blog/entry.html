@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="{% static 'blog/style.css' %}"/>
+        <title>Blog</title>
+    </head>
+
+    <body>
+
+        <h1>
+            {{blogPost.title}}
+        </h1>
+
+        <h2
+            >{{blogPost.author}}
+        </h2>
+
+        <ul class="list">
+            <li><a href="/blog">Blog Section</a></li>
+            <li><a href="/blog/archive">Archive Section</a></li>
+            <li><a href="/blog/about">About Section</a></li>
+            <li><a href="/blog/techtips-css/">Techtips - CSS</a></li>
+            <li><a href="/blog/techtips+css/">Techtips + CSS</a></li>
+            <li><a href="/blog/plan/">Plan</a></li>
+        </ul>
+
+
+        <p>The current time is {{now}}</p>
+
+        <div style="background-color: lightgreen">
+            <p>{{blogPost.content}}</p>
+        </div>
+
+        <h2>Comment Now!</h2>
+        
+        <form action="/blog/entry/{{blogPost.id}}/comment/" method="POST">
+            {% csrf_token %}
+            <p>Please put your name below:</p>
+            <input type="text">
+
+            <p>Please put your email below:</p>
+            <input type="text">
+
+            <p>Please put your comment below:</p>
+            <input type="text" style="width: 400px; word-wrap: break-word; word-break: break-all;">
+            <button type="submit">Submit</button>
+        </form>
+
+        <h2>{{newCommentList | length}}</h2>
+        
+        {% for comment in newCommentList %}
+        <p>{{comment.commenter}} ({{comment.email}}) said this at {{comment.posted}}</p>
+        <p>{{comment.content}}</p>
+        {% endfor %}
+
+    </body>
+</html>
