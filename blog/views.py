@@ -1,14 +1,14 @@
 from time import strftime
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from .models import Blog, Comments
+from .models import Blog, Comment
 from django.urls import reverse
 
 from django.utils import timezone
 
 # Create your views here.
 def index(request):
-	commentsList = list(Comments.objects.all())
+	commentsList = list(Comment.objects.all())
 	blogList = list(Blog.objects.all())
 	newBlogList = []
 
@@ -18,8 +18,7 @@ def index(request):
 	return render(request, 'blog/index.html', {'now': strftime('%c'), 'newBlogList': newBlogList, 'commentsList' : commentsList})
 
 def archive(request):
-	commentsList = list(Comments.objects.all())
-	print(len(commentsList))
+	commentsList = list(Comment.objects.all())
 
 	blogList = list(Blog.objects.all())
 	newBlogList = []
@@ -45,7 +44,7 @@ def comment(request, blog_id):
     blogPost = get_object_or_404(Blog, pk=blog_id)
     try:
         comment = blogPost.set(pk=request.POST['comment'])
-    except (KeyError, Comments.DoesNotExist):
+    except (KeyError, Comment.DoesNotExist):
         # Redisplay the entry.
         return render(request, '/blog/entry/{blog_id}', {
             'blogPost': blogPost,
