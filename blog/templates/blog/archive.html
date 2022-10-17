@@ -25,9 +25,9 @@
 
         <p>The current time is {{now}}</p>
 
-        {% for blogPost in newBlogList %}
+        {% for blogPost in blogList %}
         <div style="background-color: lightgreen">
-            <h2><a href="/blog/entry/{{blogPost.id}}">{{blogPost.title}}</a> ({{commentsList | length}} Comments) </h2>
+            <h2><a href="/blog/entry/{{blogPost.id}}">{{blogPost.title}}</a> ({{blogPost.commentCount}} Comments) </h2>
             <h3>{{blogPost.author}} </h3>
             <p>{{blogPost.content|truncatewords:100}}</p>
         </div>

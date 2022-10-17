@@ -12,15 +12,8 @@ def index(request):
 	return render(request, 'blog/index.html', {'now': strftime('%c'), 'blogList': blogList})
 
 def archive(request):
-	commentsList = list(Comment.objects.all())
-
-	blogList = list(Blog.objects.all())
-	newBlogList = []
-
-	for blogPost in blogList:
-		newBlogList.insert(0, blogPost)
-
-	return render(request, 'blog/archive.html', {'now': strftime('%c'), 'newBlogList': newBlogList, 'commentsList' : commentsList})
+	blogList = Blog.objects.order_by("-posted").all()
+	return render(request, 'blog/archive.html', {'now': strftime('%c'), 'blogList': blogList})
 	
 def entry(request, blog_id):
 	# blog = get_object_or_404(Blog, pk=blog_id)
@@ -32,7 +25,8 @@ def entry(request, blog_id):
 	# 	newCommentList.insert(0, comment)
 
 	blogPost = get_object_or_404(Blog, pk=blog_id)
-	return render(request, 'blog/entry.html', {'now': strftime('%c'), 'blogPost': blogPost})
+	comments = Comment.objects.filter(blog=blogPost).order_by("-posted").all()
+	return render(request, 'blog/entry.html', {'now': strftime('%c'), 'blogPost': blogPost, 'comments': comments})
 
 def comment(request, blog_id):
     blogPost = get_object_or_404(Blog, pk=blog_id)

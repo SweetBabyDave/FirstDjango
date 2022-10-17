@@ -49,11 +49,11 @@
             <button type="submit">Submit</button>
         </form>
 
-        <h2>{{newCommentList | length}}</h2>
+        <h2>{{blogPost.commentCount}} Comments</h2>
         
-        {% for comment in newCommentList %}
-        <p>{{comment.commenter}} ({{comment.email}}) said this at {{comment.posted}}</p>
-        <p>{{comment.content}}</p>
+        {% for comment in comments %}
+            <p><strong>{{comment.commenter}}</strong> ({{comment.email}}) said this at {{comment.posted}}</p>
+            <p>{{comment.content}}</p>
         {% endfor %}
 
     </body>
