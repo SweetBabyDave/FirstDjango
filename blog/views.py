@@ -8,14 +8,8 @@ from django.utils import timezone
 
 # Create your views here.
 def index(request):
-	commentsList = list(Comment.objects.all())
-	blogList = list(Blog.objects.all())
-	newBlogList = []
-
-	for blogPost in blogList[-3:]:
-		newBlogList.insert(0, blogPost)
-
-	return render(request, 'blog/index.html', {'now': strftime('%c'), 'newBlogList': newBlogList, 'commentsList' : commentsList})
+	blogList = Blog.objects.order_by("-posted").all()[:3]
+	return render(request, 'blog/index.html', {'now': strftime('%c'), 'blogList': blogList})
 
 def archive(request):
 	commentsList = list(Comment.objects.all())

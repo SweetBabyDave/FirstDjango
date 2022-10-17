@@ -8,6 +8,9 @@ class Blog(models.Model):
     posted = models.DateTimeField()
     def __str__(self):
         return self.title
+    @property
+    def commentCount(self):
+        return Comment.objects.filter(blog_id=self.id).count()
 
 class Comment(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
