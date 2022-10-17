@@ -2,7 +2,7 @@ from time import strftime
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import Blog, Comment
-from django.urls import reverse
+from django.shortcuts import redirect
 
 from django.utils import timezone
 
@@ -16,34 +16,24 @@ def archive(request):
 	return render(request, 'blog/archive.html', {'now': strftime('%c'), 'blogList': blogList})
 	
 def entry(request, blog_id):
-	# blog = get_object_or_404(Blog, pk=blog_id)
-	# commentsList = list(Comments.objects.all())
-	# newCommentList = []
-	# blogList = list(Blog.objects.all())
-
-	# for comment in commentsList:
-	# 	newCommentList.insert(0, comment)
-
 	blogPost = get_object_or_404(Blog, pk=blog_id)
 	comments = Comment.objects.filter(blog=blogPost).order_by("-posted").all()
 	return render(request, 'blog/entry.html', {'now': strftime('%c'), 'blogPost': blogPost, 'comments': comments})
 
 def comment(request, blog_id):
-    blogPost = get_object_or_404(Blog, pk=blog_id)
-    try:
-        comment = blogPost.set(pk=request.POST['comment'])
-    except (KeyError, Comment.DoesNotExist):
-        # Redisplay the entry.
-        return render(request, '/blog/entry/{blog_id}', {
-            'blogPost': blogPost,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        comment.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('blog:entry', args=(blog_id,)))
+	blogPost = get_object_or_404(Blog, pk=blog_id)
+
+	# Redisplay the entry.
+	if not request.POST['commenter'] or not request.POST['email'] or not request.POST['content']: 
+		return redirect('entry', blog_id=blogPost.pk)
+		
+	comment = Comment(blog=blogPost, commenter=request.POST['commenter'],
+	email=request.POST['email'], content=request.POST['content'],
+	posted=timezone.now()
+	)
+	comment.save()
+
+	return redirect('entry', blog_id=blogPost.pk)
 
 def about(request):
 	return render(request, 'blog/about.html', {'now': strftime('%c')})

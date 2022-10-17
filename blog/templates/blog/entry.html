@@ -36,16 +36,16 @@
 
         <h2>Comment Now!</h2>
         
-        <form action="/blog/entry/{{blogPost.id}}/comment/" method="POST">
+        <form action="{% url 'comment' blogPost.id  %}" method="post">
             {% csrf_token %}
             <p>Please put your name below:</p>
-            <input type="text">
+            <input type="text" id="commenter" name="commenter">
 
             <p>Please put your email below:</p>
-            <input type="text">
+            <input type="text" id="email" name="email">
 
             <p>Please put your comment below:</p>
-            <input type="text" style="width: 400px; word-wrap: break-word; word-break: break-all;">
+            <input type="text" id="content" name="content" style="width: 400px; word-wrap: break-word; word-break: break-all;">
             <button type="submit">Submit</button>
         </form>
 
