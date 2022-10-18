@@ -32,19 +32,19 @@
             Phase 0: Requirements Specification
         </h2>
 
-            I need to create a server for the blog that I created in the last assignment. I need to add a few more dynamic pages to the website. I also need to work with HTTP Headers and requests to make sure my websites are all valid.
+            I need to create a Django framework for a blog website. Every webpage is going to have a dynamic element to it. I also need to work with the Views and Models, etc. to get everything to work correctly.
 
             <h3>Good Solution</h3>
 
-                A good solution will handle all of the client errors in writing the address for the webpage they want to go to. It will have all of the headers and requests required in the assignment documentation.
+                A good solution will let the user be able to click on all of the hyperlinks at any time and not have any crashes. Especially with the submit comment button. Also it will be easy to see that it is a blog.
 
             <h3>Challenges</h3>
 
-                One challenge I can see is creating the dynamic webpages. It seems difficult to create a page as the user visits the website and not have it already created.
+                Getting to understand Django with all of the tutorial that is thrown at you seems extremely difficult. I have never used Django before, so that is definitely going to be a challenge for me.
 
             <h3>Knowns</h3>
 
-                I didn't know a lot of the information to this assignment before starting, but I know how to write the basic HTML for the dynamic webpage creation. From class, I know slightly how to create HTTP requests, but I'm going to need to do some research on HTTP requests. I will also need to look into the http.server library as well.
+                I have never used Django before this assignment, but I know how to write the basic HTML for the dynamic webpage creation. We did that in the last assignment.  From class, I am slowly grasping the Django information.
          </div>
 
         <div style="background-color: aqua">
@@ -55,15 +55,19 @@
 
             <h3>Data</h3>
 
-                There is information coming from the directory to take us over to other pages. There are HTML documents, jpgs, etc. in the directory. There also is supposed to be a CSS document that gives style to most of the other HTML documents.
+                There is information that comes from static directorys and template directorys. Of course the static is information that shouldn't be changed, whereas the templates are information that can be edited.
 
             <h3>Output</h3>
 
-                The output will be an HTML document. It looks like a regular blog website. This blog website will be on a HTTP server.
-
+                The output will be a Blog website. It is going to be implemented with the Django framework. There will be a way to add comments to the blog posts. There will be HTML pages that you can go to by clicking on links on the webpage.
+            
             <h3>Algorithms</h3>
 
-                There will be a function that completes a GET request. A function that completes the HTTP headers. And another function that opens files.
+            <ul>
+                <li>Views - There are going to be a lot of views for this assignment. These give the view for the user to see the information.</li>
+                <li>Models - Classes of objects that are going to be used throughout the Django framework.</li>
+                <li>Honestly, I didn't see too many algorithms, but I could be completely mistaken.</li>
+            </ul>
 
         </div>
 
@@ -73,21 +77,30 @@
             Phase 2: Design
         </h2>
 
-            <h3>Visuals</h3>
+        Disclaimer: I didn't know what to put in this section at points, so I just looked up small things from Django and wrote them down. This is what a path looks like
+        <pre>
+            <code>
+                path('', views.index, name='index')
+            </code>
+        </pre>
 
-                Since this part is coming mostly from the last assignment, this will the same with a few added HTML pages. The blog page will be a generic blog post with text on it, lists, and titles of blog posts. The about page will be 3 pictures with text below each of them. The text will be the gap between each picture. The CSS pages will be text with a lot of lists that are zebra colored. It will also have a different background color for the text. There will also be hyperlinks between pages at the top of each page. These are relative hyperlinks and are on my computer locally.
+        Creation of a view.
+        <pre>
+            <code>
+                def index(request):
+	                ....
+	                return render(request, 'blog/index.html')
+            </code>
+        </pre>
 
-            <h3>CSS</h3>
-
-                I will have a CSS style file that just states how the header will look, how the lists will look, and how the background will look.
-
-            <h3>HTTP Requests</h3>
-
-                I will have functions that handle the HTTP Requests of the client. I am going to be using the wfile.write() function to write the information.
-
-            <h3>HTTP Response</h3>
-
-                I will have a function that handles the HTTP Response of the server. Looking over the assigned document, I will use the send_response() function in the server class.
+        This is what a Model looks like.
+        <pre>
+            <code>
+                class Question(models.Model):
+                    question_text = models.CharField(max_length=200)
+                    ...
+            </code>
+        </pre>
 
         </div>
         <div style="background-color: aqua">
@@ -95,33 +108,14 @@
             Phase 3: Implementation
         </h2>
         
-            <pre>
-                <code>
-                    def do_GET(self):
-                        """
-                        Does the GET request that the client sends to the server. Makes sure the address is valid.
-                        Input: Takes the path that the user inputs into the address bar and checks if it's valid.
-                        Output: Writes the actual data to the webpage with wfile.write().
-                </code>
-            </pre>
-            <pre>
-                <code>
-                    def do_HEAD(self, fileSize=None, fileType=None, location=None, code=200):
-                        """
-                        Does the HTTP Header response that the server sends to the client. Makes sure the address is valid.
-                        Input: Checks the code that the do_GET() sends. Along with, a file size, file type, and location. These all come from the do_GET() method.
-                        Output: Sends headers to the server.
-                </code>
-            </pre>
-            <pre>
-                <code>
-                    def openFile(self, file):
-                        """
-                        Opens the file and reads it.
-                        Input: file from the directory.
-                        Output: Sends the file data in the do_GET() method.
-                </code>
-            </pre>
+        <h3>Problems/Learning</h3>
+
+        <ul>
+            <li>My Pseudocode was not the most helpful to me during this assignment. I felt like it was such a mountain to overcome that I just had to keep going back to the tutorial and videos over and over.</li>
+            <li>Also, I felt like it was extremely difficult to write the Pseudocode because I had no idea what Django was supposed to look like.</li>
+            <li>Making sure that every bit of your Django app runs well during the tutorial is key. I had a few bugs from the tutorial, and I ended up having similar bugs on the assignment.</li>
+            <li>I learned that Django is hard, but it is kinda sick.</li>
+        </ul>
 
         </div>
         <div style="background-color: lightgreen">
@@ -129,17 +123,55 @@
             Phase 4: Testing and Debugging
         </h2>
         
-            I have ran netcat for this server a lot to try and understand the server. Also, it works well on Firefox, but on Chrome it doesn't import the stylesheet correctly. If you go into the source tab and edit the css sheet, then it will work, but otherwise I could not figure it out. The most common errors were:
+            I made sure to go to every page and click on every link that was available and they all worked. I can click the submit button on comments with no information and it is fine. The most errors came from:
 
         <ul>
-            <li>Incorrect headers</li>
-            <li>Downloading the file when I wanted it to display</li>
-            <li>The page not loading because of incorrect bytes for the headers</li>
+            <li>Comment View</li>
+            <li>Migrate</li>
+            <li>Small syntax mistakes</li>
         </ul>
+        
+            I deleted some files from the migrations folder by accident and had an hour error just trying to fix it. I ended up deleting my pycache folder and deleting all of the migration files then remigrating and it fixed it. The comment View was the hardest part to figure out for sure and there was a lot of bugs with getting it to redirect to the right page. Here is also some code that helped me to figure out my migration issue.
+            
+            <pre>
+                <code>
+                    $ python manage.py showmigrations
+                    admin
+                    [X] 0001_initial
+                    [X] 0002_logentry_remove_auto_add
+                    [X] 0003_logentry_add_action_flag_choices
+                    auth
+                    [X] 0001_initial
+                    [X] 0002_alter_permission_name_max_length
+                    [X] 0003_alter_user_email_max_length
+                    [X] 0004_alter_user_username_opts
+                    [X] 0005_alter_user_last_login_null
+                    [X] 0006_require_contenttypes_0002
+                    [X] 0007_alter_validators_add_error_messages
+                    [X] 0008_alter_user_username_max_length
+                    [X] 0009_alter_user_last_name_max_length
+                    [X] 0010_alter_group_name_max_length
+                    [X] 0011_update_proxy_permissions
+                    [X] 0012_alter_user_first_name_max_length
+                    blog
+                    [X] 0001_initial
+                    [X] 0002_populate
+                    contenttypes
+                    [X] 0001_initial
+                    [X] 0002_remove_content_type_name
+                    hello
+                    (no migrations)
+                    polls
+                    [X] 0001_initial
+                    sessions
+                    [X] 0001_initial
+                </code>
+            </pre>
 
-            If you would like to test that the server operates correctly, I would recommend starting it and using netcat. If you go to your terminal while the server is running, just run "nc localhost 8000". Then type in "GET /index.html HTTP/1.1". Then press enter twice and you can see your headers for that page and the html of the page.
+            This helped me to see if the migration was working after I accidentally deleted it.
 
         </div>
+
         <div style="background-color: aqua">
         <h2>
             Phase 5: Deployment
@@ -147,6 +179,7 @@
 
             I turned in the zip file and made sure that each of the files were properly named.
         </div>
+
         <div style="background-color: lightgreen">
         <h2>
             Phase 6: Maintenance
@@ -154,32 +187,32 @@
 
             What parts of your program are sloppily written and hard to understand?
             <ul>
-                <li>I would say my do_GET() is not the best. It has a lot of HTML and elif statements to redirect to the correct pages. It seems a little funky.</li>
+                <li>I feel like my views are slightly difficult to understand. Specifically the comment view, it just was so difficult to get the comment view to work that the syntax struggled.</li>
             </ul>
             
             Are there parts of your program which you aren’t quite sure how/why they work?
             <ul>
-                <li>The do_HEAD() is a little confusing to me. The send_response() never made a whole lot of sense to me, it seems like it was an initializing header.</li>
+                <li>The views were a little confusing to me, but the most confusing part to me was the foreignKey. There was so many times when it was passed into a function and I didn't understand what it was doing.</li>
             </ul>
         
             If a bug is reported in a few months, how long would it take you to find the cause?
             <ul>
-                <li>It would take me awhile if it was in the do_GET() method, but if it was in the other 2 methods then I would be able to find it quickly.</li>
+                <li>This one would take me a very long time to figure out. I would be able to find the location of the bug, but fixing it would be hard.</li>
             </ul>
             
             Will your documentation make sense to anybody besides yourself?    
             <ul>
-                <li>I think the do_GET would be confusing to someone else.</li>
+                <li>I think my documentation isn't the best for this assignment.</li>
             </ul>
         
             yourself in six month’s time?   
             <ul>
-                <li>I would have to take some time to relook it over in 6 months.</li>
+                <li>I would definitely have to look over the files for a long time to understand it.</li>
             </ul>
         
             How easy will it be to add a new feature to this program in a year?    
             <ul>
-                <li>It wouldn't be that bad. I think it would be pretty easy because there's not a whole lot of code.</li>
+                <li>It wouldn't be that bad if you know Django. I think that adding something new is very feasible.</li>
             </ul>
         
             Will your program continue to work after upgrading
@@ -195,7 +228,7 @@
          
                 to the next version of Python? 
             <ul>
-                <li>Definitely.</li>
+                <li>Possibly. I don't know with Django.</li>
             </ul>
         </div>
     </body>

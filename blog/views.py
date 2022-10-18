@@ -1,9 +1,7 @@
 from time import strftime
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import Blog, Comment
 from django.shortcuts import redirect
-
 from django.utils import timezone
 
 # Create your views here.
